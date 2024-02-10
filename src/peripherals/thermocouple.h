@@ -1,24 +1,19 @@
 #ifndef THERMOCOUPLE_H
 #define THERMOCOUPLE_H
 
-#include "pindef.h"
+#include <Arduino.h>
 
-#if defined SINGLE_BOARD
-#include <Adafruit_MAX31855.h>
-SPIClass thermoSPI(thermoDI, thermoDO, thermoCLK);
-Adafruit_MAX31855 thermocouple(thermoCS, &thermoSPI);
+#if defined THERMOCOUPLE_MAX31855
+#include "thermocouple_max31855.h"
+
+#elif defined THERMOCOUPLE_MAX6675
+#include "thermocouple_max6675.h"
+
 #else
-#include <max6675.h>
-SPIClass thermoSPI(thermoDI, thermoDO, thermoCLK);
-MAX6675 thermocouple(thermoCS, &thermoSPI);
+#define GET_KTYPE_READ_EVERY 0
 #endif
 
-static inline void thermocoupleInit(void) {
-  thermocouple.begin();
-}
-
-static inline float thermocoupleRead(void) {
-  return thermocouple.readCelsius();
-}
+void thermocoupleInit(void);
+float thermocoupleRead(void);
 
 #endif
