@@ -1,3 +1,7 @@
+<div align="center">
+[![Gaggiuino](/images/GAGGIUINO_UNLEASHED_LOGO_transp.png)](https://github.com/julian3xl/gaggiuino_unleashed)
+</div>
+
 ### DISCLAMER
 
 This repository is a modification of the original [Gaggiuino](https://gaggiuino.github.io/#/) with the goal of having a more developer/diy-lover focused project.
