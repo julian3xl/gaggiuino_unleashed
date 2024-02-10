@@ -1,22 +1,11 @@
 #ifndef INTERNALWATCHDOG_H
 #define INTERNALWATCHDOG_H
+
 #include <Arduino.h>
-#include <IWatchdog.h>
-#include "../lcd/lcd.h"
-#include "../log.h"
 
-/*Checking whether system is booting after a hard reset initiated by the internal watchdog.*/
-static inline void iwdcInit(void) {
-  // IWDC init
-  if(IWatchdog.isReset()) {
-    lcdShowPopup("WATCHDOG RESTARTED");
-    IWatchdog.clearReset();
-  }
-  IWatchdog.begin(5000000);
-  LOG_INFO("Internal watchdog Init");
-}
+#define WATCHDOG_TIMEOUT 5000000 // ms
 
-static inline void watchdogReload(void) {
-  IWatchdog.reload();
-}
+void watchdogInit(void);
+void watchdogReload(void);
+
 #endif
