@@ -33,7 +33,7 @@ void setup(void) {
   pinInit();
   LOG_INFO("Pin init");
 
-  setBoilerOff();  // relayPin LOW
+  setBoilerOff();  // boilerRelayPin LOW
   setSteamValveRelayOff();
   setSteamBoilerRelayOff();
   LOG_INFO("Boiler turned off");
@@ -136,7 +136,7 @@ static void sensorsRead(void) {
 static void sensorReadSwitches(void) {
   currentState.brewSwitchState = brewState();
   currentState.steamSwitchState = steamState();
-  currentState.hotWaterSwitchState = waterPinState() || (currentState.brewSwitchState && currentState.steamSwitchState); // use either an actual switch, or the GC/GCP switch combo
+  currentState.hotWaterSwitchState = hotWaterSwitchPinState() || (currentState.brewSwitchState && currentState.steamSwitchState); // use either an actual switch, or the GC/GCP switch combo
 }
 
 static void sensorsReadTemperature(void) {
@@ -826,8 +826,6 @@ static inline void sysHealthCheck(float pressureThreshold) {
   }
 
   //Releasing the excess pressure after steaming or brewing if necessary
-  #if defined LEGO_VALVE_RELAY || defined SINGLE_BOARD
-
   // No point going through the whole thing if this first condition isn't met.
   if (currentState.brewSwitchState || currentState.steamSwitchState || currentState.hotWaterSwitchState) {
     systemHealthTimer = millis() + HEALTHCHECK_EVERY;
@@ -877,7 +875,6 @@ static inline void sysHealthCheck(float pressureThreshold) {
       }
     }
   }
-  #endif
 }
 
 // Function to track time since system has started
@@ -887,8 +884,6 @@ static unsigned long getTimeSinceInit(void) {
 }
 
 static void fillBoiler(void) {
-  #if defined LEGO_VALVE_RELAY || defined SINGLE_BOARD
-
   if (systemState.startupInitFinished) {
     return;
   }
@@ -904,9 +899,6 @@ static void fillBoiler(void) {
   else if (isSwitchOn()) {
     lcdShowPopup("Brew Switch ON!");
   }
-#else
-  systemState.startupInitFinished = true;
-#endif
 }
 
 static bool isBoilerFillPhase(unsigned long elapsedTime) {

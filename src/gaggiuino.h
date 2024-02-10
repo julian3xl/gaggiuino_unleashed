@@ -23,12 +23,6 @@
 #include "peripherals/led.h"
 #include "peripherals/tof.h"
 
-// Define some const values
-#if defined SINGLE_BOARD
-    #define GET_KTYPE_READ_EVERY    70 // max31855 amp module data read interval not recommended to be changed to lower than 70 (ms)
-#else
-    #define GET_KTYPE_READ_EVERY    250 // max6675 amp module data read interval not recommended to be changed to lower than 250 (ms)
-#endif
 #define GET_PRESSURE_READ_EVERY 10 // Pressure refresh interval (ms)
 #define GET_SCALES_READ_EVERY   100 // Scales refresh interval (ms)
 #define REFRESH_SCREEN_EVERY    150 // Screen refresh interval (ms)
@@ -55,13 +49,6 @@ enum class OPERATION_MODES {
   OPMODE_everythingFlowProfiled,
   OPMODE_pressureBasedPreinfusionAndFlowProfile
 } ;
-
-//Some consts
-#ifndef LEGO_VALVE_RELAY
-const float calibrationPressure = 2.f;
-#else
-const float calibrationPressure = 0.65f;
-#endif
 
 //Timers
 unsigned long systemHealthTimer;

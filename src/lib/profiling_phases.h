@@ -2,7 +2,7 @@
 #define PROFILING_PHASES_H
 
 #include "utils.h"
-#include "../lib/sensors_state.h"
+#include "sensors_state.h"
 #include "../../src/eeprom_data/eeprom_data.h"
 #include <vector>
 

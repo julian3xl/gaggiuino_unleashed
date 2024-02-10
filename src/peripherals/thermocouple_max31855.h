@@ -7,7 +7,7 @@
 
 #define GET_KTYPE_READ_EVERY 70
 
-SPIClass thermocoupleSPI(thermoDI, thermoDO, thermoCLK);
-Adafruit_MAX31855 thermocouple(thermoCS, &thermocoupleSPI);
+SPIClass thermocoupleSPI(thermocoupleDI, thermocoupleDO, thermocoupleCLK);
+Adafruit_MAX31855 thermocouple(thermocoupleCS, &thermocoupleSPI);
 
 #endif

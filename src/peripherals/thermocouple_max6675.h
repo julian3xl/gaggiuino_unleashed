@@ -7,7 +7,7 @@
 
 #define GET_KTYPE_READ_EVERY 250
 
-SPIClass thermocoupleSPI(thermoDI, thermoDO, thermoCLK);
-MAX6675 thermocouple(thermoCS, &thermocoupleSPI);
+SPIClass thermocoupleSPI(thermocoupleDI, thermocoupleDO, thermocoupleCLK);
+MAX6675 thermocouple(thermocoupleCS, &thermocoupleSPI);
 
 #endif

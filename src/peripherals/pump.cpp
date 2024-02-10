@@ -4,7 +4,7 @@
 #include "../lib/utils.h"
 #include "internal_watchdog.h"
 
-PSM pump(zcPin, dimmerPin, PUMP_RANGE, ZC_MODE, 1, 6);
+PSM pump(pumpZcPin, pumpDimmerPin, PUMP_RANGE, ZC_MODE, 1, 6);
 
 float flowPerClickAtZeroBar = 0.27f;
 int maxPumpClicksPerSecond = 50;

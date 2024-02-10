@@ -6,32 +6,29 @@
 #include <Arduino.h>
 
 static inline void pinInit(void) {
-  #if defined(LEGO_VALVE_RELAY)
-    pinMode(valvePin, OUTPUT_OPEN_DRAIN);
-  #else
-    pinMode(valvePin, OUTPUT);
-  #endif
-  pinMode(relayPin, OUTPUT);
+  //pinMode(brewValvePin, OUTPUT_OPEN_DRAIN);
+  pinMode(brewValvePin, OUTPUT);
+  pinMode(boilerRelayPin, OUTPUT);
   #ifdef steamValveRelayPin
   pinMode(steamValveRelayPin, OUTPUT);
   #endif
   #ifdef steamBoilerRelayPin
   pinMode(steamBoilerRelayPin, OUTPUT);
   #endif
-  pinMode(brewPin,  INPUT_PULLUP);
-  pinMode(steamPin, INPUT_PULLUP);
-  #ifdef waterPin
-  pinMode(waterPin, INPUT_PULLUP);
+  pinMode(brewSwitchPin,  INPUT_PULLUP);
+  pinMode(steamSwitchPin, INPUT_PULLUP);
+  #ifdef hotWaterSwitchPin
+  pinMode(hotWaterSwitchPin, INPUT_PULLUP);
   #endif
 }
 
 // Actuating the heater element
 static inline void setBoilerOn(void) {
-  digitalWrite(relayPin, HIGH);  // boilerPin -> HIGH
+  digitalWrite(boilerRelayPin, HIGH);  // boilerRelayPin -> HIGH
 }
 
 static inline void setBoilerOff(void) {
-  digitalWrite(relayPin, LOW);  // boilerPin -> LOW
+  digitalWrite(boilerRelayPin, LOW);  // boilerRelayPin -> LOW
 }
 
 static inline void setSteamValveRelayOn(void) {
@@ -61,37 +58,29 @@ static inline void setSteamBoilerRelayOff(void) {
 //Function to get the state of the brew switch button
 //returns true or false based on the read P(power) value
 static inline bool brewState(void) {
-  return digitalRead(brewPin) == LOW; // pin will be low when switch is ON.
+  return digitalRead(brewSwitchPin) == LOW; // pin will be low when switch is ON.
 }
 
 // Returns HIGH when switch is OFF and LOW when ON
 // pin will be high when switch is ON.
 static inline bool steamState(void) {
-  return digitalRead(steamPin) == LOW; // pin will be low when switch is ON.
+  return digitalRead(steamSwitchPin) == LOW; // pin will be low when switch is ON.
 }
 
-static inline bool waterPinState(void) {
-  #ifdef waterPin
-  return digitalRead(waterPin) == LOW; // pin will be low when switch is ON.
+static inline bool hotWaterSwitchPinState(void) {
+  #ifdef hotWaterSwitchPin
+  return digitalRead(hotWaterSwitchPin) == LOW; // pin will be low when switch is ON.
   #else
   return false;
   #endif
 }
 
 static inline void openValve(void) {
-  #if defined LEGO_VALVE_RELAY
-    digitalWrite(valvePin, LOW);
-  #else
-    digitalWrite(valvePin, HIGH);
-  #endif
+  digitalWrite(brewValvePin, HIGH);
 }
 
 static inline void closeValve(void) {
-  #if defined LEGO_VALVE_RELAY
-    digitalWrite(valvePin, HIGH);
-  #else
-    digitalWrite(valvePin, LOW);
-  #endif
+  digitalWrite(brewValvePin, LOW);
 }
 
 #endif
