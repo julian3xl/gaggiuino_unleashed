@@ -1,0 +1,8 @@
+#ifndef PRESSURE_SENSOR_ADS1015_H
+#define PRESSURE_SENSOR_ADS1015_H
+
+#include "ADS1X15.h"
+
+ADS1015 ADS(0x48);
+
+#endif

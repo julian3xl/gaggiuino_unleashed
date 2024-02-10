@@ -1,14 +1,32 @@
 #include "pressure_sensor.h"
-#include "pindef.h"
-#include "ADS1X15.h"
+
+#include "i2c_bus_reset.h"
 #include "../lcd/lcd.h"
 #include "../log.h"
-#include "i2c_bus_reset.h"
+#include "../pindef.h"
 
-#if defined SINGLE_BOARD
-ADS1015 ADS(0x48);
+#if defined ADC_ADS1015
+#include "pressure_sensor_ads1015.h"
+
+#elif defined ADC_ADS1115
+#include "pressure_sensor_ads1115.h"
+
 #else
-ADS1115 ADS(0x48);
+class DummyADS {
+public:
+  void begin() {}
+
+  void setGain(uint8_t gain) {}
+  void setDataRate(uint8_t dataRate) {}
+  void setMode(uint8_t mode) {}
+  int16_t readADC_SingleEnded() { return 0; }
+  int16_t readADC_Differential_0_1() { return 0; }
+  int16_t readADC_Differential_2_3() { return 0; }
+  int16_t readADC(uint8_t channel) { return 0; }
+  int16_t getLastConversionResults() { return 0; }
+  bool isConnected() { return false; }
+  short getError() { return 0; }
+} ADS;
 #endif
 
 float previousPressure;
@@ -32,10 +50,13 @@ float getPressure(void) {  //returns sensor pressure data
   getAdsError();
 
   previousPressure = currentPressure;
-#if defined SINGLE_BOARD
+#if defined ADC_ADS1015
   currentPressure = (ADS.getValue() - 166) / 111.11f; // 12bit
-#else
+#elif defined ADC_ADS1115
   currentPressure = (ADS.getValue() - 2666) / 1777.8f; // 16bit
+#else
+  currentPressure = 0;
+  LOG_ERROR("ADS not defined");
 #endif
 
   return currentPressure;
@@ -70,9 +91,11 @@ void i2cResetState(void) {
     short result = I2C_ClearBus(PIN_WIRE_SDA, PIN_WIRE_SCL);
     char tmp[25];
     unsigned int check = snprintf(tmp, sizeof(tmp), "I2C error code: %i", result);
+
     if (check > 0 && check <= sizeof(tmp)) {
       result == 0 ? adsInit() : lcdShowPopup(tmp);
     }
+
     delay(50);
   }
 }
