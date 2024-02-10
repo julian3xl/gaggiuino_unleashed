@@ -1,9 +1,8 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #ifndef PUMP_H
 #define PUMP_H
 
 #include <Arduino.h>
-#include "sensors_state.h"
+#include "../lib/sensors_state.h"
 
 #define ZC_MODE    FALLING
 

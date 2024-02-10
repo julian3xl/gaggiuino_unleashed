@@ -1,4 +1,3 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #ifndef THERMOCOUPLE_H
 #define THERMOCOUPLE_H
 

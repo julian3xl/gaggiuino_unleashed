@@ -1,8 +1,7 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #include "pump.h"
 #include "pindef.h"
 #include <PSM.h>
-#include "utils.h"
+#include "../lib/utils.h"
 #include "internal_watchdog.h"
 
 PSM pump(zcPin, dimmerPin, PUMP_RANGE, ZC_MODE, 1, 6);

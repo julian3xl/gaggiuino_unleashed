@@ -1,9 +1,8 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #ifndef PROFILING_PHASES_H
 #define PROFILING_PHASES_H
 
 #include "utils.h"
-#include "sensors_state.h"
+#include "../lib/sensors_state.h"
 #include "../../src/eeprom_data/eeprom_data.h"
 #include <vector>
 
@@ -97,8 +96,8 @@ class CurrentPhase {
 private:
   int index;
   const Phase* phase;
-  const ShotSnapshot* shotSnapshotAtStart;
   unsigned long timeInPhase;
+  const ShotSnapshot* shotSnapshotAtStart;
 
 public:
   CurrentPhase(int index, const Phase& phase, uint32_t timeInPhase, const ShotSnapshot& shotSnapshotAtStart);

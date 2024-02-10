@@ -1,4 +1,3 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #pragma GCC optimize ("Ofast")
 #if defined(DEBUG_ENABLED)
   #include "dbg.h"
@@ -29,7 +28,6 @@ TOF tof;
 
 void setup(void) {
   LOG_INIT();
-  LOG_INFO("Gaggiuino (fw: %s) booting", AUTO_VERSION);
 
   // Various pins operation mode handling
   pinInit();

@@ -1,4 +1,3 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #ifndef INTERNALWATCHDOG_H
 #define INTERNALWATCHDOG_H
 #include <Arduino.h>

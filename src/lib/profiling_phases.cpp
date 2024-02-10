@@ -1,4 +1,3 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #include "profiling_phases.h"
 
 //----------------------------------------------------------------------//
@@ -63,7 +62,7 @@ inline bool predictTargerAchieved(const float targetValue, const float currentVa
 bool PhaseStopConditions::isReached(SensorState& state, long timeInShot, ShotSnapshot stateAtPhaseStart) const {
   auto stopOn = this;
   uint32_t timeInPhase = timeInShot - stateAtPhaseStart.timeInShot;
-  float flow = state.weight > 0.4f ? state.smoothedWeightFlow : state.smoothedPumpFlow;
+  //float flow = state.weight > 0.4f ? state.smoothedWeightFlow : state.smoothedPumpFlow;
   float currentWaterPumpedInPhase = state.waterPumped - stateAtPhaseStart.waterPumped;
 
   return (stopOn->time >= 0L && timeInPhase >= static_cast<uint32_t>(stopOn->time)) ||
@@ -85,7 +84,7 @@ bool GlobalStopConditions::isReached(const SensorState& state, uint32_t timeInSh
 
   return (stopOn->weight > 0.f && predictTargerAchieved(stopOn->weight, state.shotWeight, flow, 0.5f)) ||
     (stopOn->waterPumped > 0.f && state.waterPumped > stopOn->waterPumped) ||
-    (stopOn->time > 0L && timeInShot >= stopOn->time);
+    (stopOn->time > 0L && (int32_t) timeInShot >= stopOn->time);
 }
 
 //----------------------------------------------------------------------//

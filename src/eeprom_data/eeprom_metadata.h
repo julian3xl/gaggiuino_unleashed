@@ -1,4 +1,3 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #ifndef EEPROM_METADATA_H
 #define EEPROM_METADATA_H
 

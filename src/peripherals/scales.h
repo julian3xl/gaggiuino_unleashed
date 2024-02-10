@@ -6,7 +6,7 @@
 #define FORCE_PREDICTIVE_SCALES 0
 #endif
 
-#include "measurements.h"
+#include "../lib/measurements.h"
 
 void scalesInit(float scalesF1, float scalesF2);
 void scalesTare(void);

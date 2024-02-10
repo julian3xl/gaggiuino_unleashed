@@ -1,12 +1,11 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #ifndef JUST_DO_COFFEE_H
 #define JUST_DO_COFFEE_H
 
-#include "utils.h"
+#include "../lib/utils.h"
 #include "../peripherals/peripherals.h"
 #include "../peripherals/pump.h"
 #include "../eeprom_data/eeprom_data.h"
-#include "sensors_state.h"
+#include "../lib/sensors_state.h"
 #include <Arduino.h>
 
 
@@ -28,4 +27,3 @@ void steamCtrl(const eepromValues_t &runningCfg, SensorState &currentState);
 void hotWaterMode(const SensorState &currentState);
 
 #endif
-

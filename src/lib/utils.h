@@ -1,4 +1,3 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #ifndef GAGGIA_UTILS_H
 #define GAGGIA_UTILS_H
 

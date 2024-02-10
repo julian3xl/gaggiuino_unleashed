@@ -1,4 +1,3 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #include "scales.h"
 #include "pindef.h"
 #include "remote_scales.h"

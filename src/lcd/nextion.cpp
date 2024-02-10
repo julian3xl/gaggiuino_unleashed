@@ -1,4 +1,3 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #include "lcd.h"
 #include "pindef.h"
 #include "log.h"
@@ -34,7 +33,6 @@ void lcdInit(void) {
     LOG_VERBOSE("Connecting to Nextion LCD...");
     delay(5);
   }
-  myNex.writeStr("splash.build_version.txt", AUTO_VERSION);
   lcdCurrentPageId = static_cast<NextionPage>(myNex.currentPageId);
   lcdLastCurrentPageId = static_cast<NextionPage>(myNex.currentPageId);
 }

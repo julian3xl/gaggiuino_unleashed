@@ -1,8 +1,8 @@
 #include <unity.h>
-#include <profiling_phases.h>
-#include <sensors_state.h>
-#include <../../src/eeprom_data/eeprom_data.h>
-#include <utils.h>
+#include "../../src/lib/profiling_phases.h"
+#include "../../src/lib/sensors_state.h"
+#include "../../src/eeprom_data/eeprom_data.h"
+#include "../../src/lib/utils.h"
 
 Phase pressurePhase(float start, float end, long time) {
   Phase phase = Phase{PHASE_TYPE::PHASE_TYPE_PRESSURE, Transition{start, end}, 0.f, PhaseStopConditions{}};

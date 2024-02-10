@@ -1,9 +1,8 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #ifndef DESCALE_H
 #define DESCALE_H
 
 #include <Arduino.h>
-#include "sensors_state.h"
+#include "../lib/sensors_state.h"
 #include "../eeprom_data/eeprom_data.h"
 
 const unsigned long DESCALE_PHASE1_EVERY = 30000UL; //30000 // short pump pulses during descale

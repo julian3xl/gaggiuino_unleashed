@@ -1,4 +1,3 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #include "descale.h"
 #include "just_do_coffee.h"
 #include "../peripherals/internal_watchdog.h"

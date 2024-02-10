@@ -1,6 +1,6 @@
-#include "profiling_phases.h"
-#include "mcu_comms.h"
-#include "utils/test-utils.h"
+#include "../../src/lib/profiling_phases.h"
+#include "../../src/lib/mcu_comms.h"
+#include "../utils/test-utils.h"
 
 void test_profile_serializer_works_correctly(void) {
   Phase phaseArray[] = {

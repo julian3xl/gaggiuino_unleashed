@@ -1,8 +1,7 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #ifndef ESP_COMMS_H
 #define ESP_COMMS_H
 
-#include "mcu_comms.h"
+#include "../lib/mcu_comms.h"
 
 void espCommsInit();
 

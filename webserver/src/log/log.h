@@ -1,4 +1,3 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #ifndef WS_LOG_H
 #define WS_LOG_H
 

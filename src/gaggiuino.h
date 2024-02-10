@@ -1,4 +1,3 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #ifndef GAGGIUINO_H
 #define GAGGIUINO_H
 
@@ -14,12 +13,12 @@
 #include "peripherals/scales.h"
 #include "peripherals/peripherals.h"
 #include "peripherals/thermocouple.h"
-#include "sensors_state.h"
-#include "system_state.h"
+#include "lib/sensors_state.h"
+#include "lib/system_state.h"
 #include "functional/descale.h"
 #include "functional/just_do_coffee.h"
 #include "functional/predictive_weight.h"
-#include "profiling_phases.h"
+#include "lib/profiling_phases.h"
 #include "peripherals/esp_comms.h"
 #include "peripherals/led.h"
 #include "peripherals/tof.h"

@@ -1,5 +1,4 @@
-class ADS1115
-{
+class ADS1115 {
 public:
   ADS1115(int);
   void begin();

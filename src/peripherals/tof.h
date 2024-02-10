@@ -4,7 +4,7 @@
 #include <stdint.h> // for uint8_t
 #include <Adafruit_VL53L0X.h>
 #include <movingAvg.h>
-#include "../../lib/Common/sensors_state.h"
+#include "../lib/sensors_state.h"
 
 Adafruit_VL53L0X tof_sensor;
 movingAvg mvAvg(4);

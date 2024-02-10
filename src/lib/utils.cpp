@@ -1,4 +1,3 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #include "utils.h"
 #include "math.h"
 

@@ -1,10 +1,9 @@
-/* 09:32 15/03/2023 - change triggering comment */
 #ifndef LCD_H
 #define LCD_H
 
 #include <EasyNextionLibrary.h>
 #include "eeprom_data/eeprom_data.h"
-#include "../../lib/Common/system_state.h"
+#include "../lib/system_state.h"
 
 
 enum class NextionPage: byte {

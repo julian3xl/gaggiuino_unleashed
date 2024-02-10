@@ -1,7 +1,7 @@
 #ifndef REMOTE_SCALES_H
 #define REMOTE_SCALES_H
 
-#include "measurements.h"
+#include "../lib/measurements.h"
 
 void remoteScalesTare(void);
 Measurement remoteScalesGetWeight(void);
