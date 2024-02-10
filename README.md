@@ -1,18 +1,18 @@
-<div align="center">
+### DISCLAMER
 
-[![Gaggiuino](/images/GAGGIUINO_LOGO_transp.png)](https://gaggiuino.github.io/#/)
-  
-[![Compile Sketch](https://github.com/Zer0-bit/gaggiuino/actions/workflows/compile-sketch.yml/badge.svg)](https://github.com/Zer0-bit/gaggiuino/actions/workflows/compile-sketch.yml)
-[![Discord Chat](https://img.shields.io/discord/890339612441063494)](https://discord.gg/eJTDJA3xfh "Join Discord Help Chat")
-</div>
+This repository is a modification of the original [Gaggiuino](https://gaggiuino.github.io/#/) with the goal of having a more developer/diy-lover focused project.
 
+Project main goals:
 
-
-## Intro
-**Gaggiuino started as an idea to improve an already capable coffee machine while keeping the machine appearance and button functionality as close as possible to the original. An important part is that no internal cables/connectors were modified; all the connections were made by creating splitters using the purchased spade connectors.**
+* Return this project to the origin, why don't make good coffee with an arduino nano?
+* Eliminates commercial stuff references. This is a project from the community, to the community.
+* Huge code refactor to support variety of hardware and eliminates hardware dependencies.
+* Reduce modules coupling so you can compile it choosing your own hardware and also contribute with more hardware.
 ***
-**For install instructions head to the project [documentation](https://gaggiuino.github.io/#/) section.**
 
-*For project related help join us on [discord](https://discord.gg/eJTDJA3xfh).*
+Again, this is a project from the community, to the community. I don't sell anything and I won't sell anything. This is a fully DIY project.
 
-</div>
+
+All attributions to [mr.toor](https://github.com/Zer0-bit) who started this project and the original code.
+
+This project follows the original [license](https://github.com/Zer0-bit/gaggiuino/blob/release/stm32-blackpill/LICENSE).
