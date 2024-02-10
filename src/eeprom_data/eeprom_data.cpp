@@ -1,5 +1,6 @@
 #include "eeprom_data.h"
-#include <FlashStorage_STM32.h>
+
+#include "eeprom.h"
 #include "eeprom_metadata.h"
 #include "default_profiles.h"
 #include "legacy/eeprom_data_v4.h"
@@ -168,17 +169,24 @@ void eepromInit(void) {
   // initialiaze defaults on memory
   eepromMetadata.values = getEepromDefaults();
 
+  #ifndef FLASH_STORAGE_STM32_VERSION
+  EEPROM.begin(sizeof(eepromMetadata));
+  #endif
+
   // read version
   uint16_t version;
   EEPROM.get(0, version);
+  LOG_INFO("EEPROM data version: %d", version);
 
   // load appropriate version (including current)
   bool readSuccess = false;
 
   if (version < EEPROM_DATA_VERSION && legacyEepromDataLoaders[version] != nullptr) {
     readSuccess = (*legacyEepromDataLoaders[version])(eepromMetadata.values);
+    LOG_INFO("Loaded legacy EEPROM data version %d", version);
   } else {
     readSuccess = loadCurrentEepromData(eepromMetadata.values);
+    LOG_INFO("Loaded current EEPROM data version %d", version);
   }
 
   if (!readSuccess) {
@@ -187,7 +195,18 @@ void eepromInit(void) {
   }
 
   if (!readSuccess || version != EEPROM_DATA_VERSION) {
-    eepromWrite(eepromMetadata.values);
+    bool writeSuccess = eepromWrite(eepromMetadata.values);
+    if (!writeSuccess) {
+      LOG_ERROR("EEPROM write failed");
+    }
+    else {
+      #ifdef __AVR__
+      EEPROM.flush();
+      #else
+      EEPROM.commit();
+      #endif
+      LOG_INFO("EEPROM data updated to version %d", EEPROM_DATA_VERSION);
+    }
   }
 }
 

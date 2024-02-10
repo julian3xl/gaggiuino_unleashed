@@ -2,6 +2,7 @@
 #define EEPROM_METADATA_H
 
 #include <Arduino.h>
+#include "eeprom.h"
 
 #define EEPROM_DATA_VERSION 12
 
