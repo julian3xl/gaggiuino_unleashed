@@ -6,22 +6,25 @@
 
 #include "log.h"
 #include "eeprom_data/eeprom_data.h"
-#include "lcd/lcd.h"
-#include "peripherals/internal_watchdog.h"
-#include "peripherals/pump.h"
-#include "peripherals/pressure_sensor.h"
-#include "peripherals/scales.h"
-#include "peripherals/peripherals.h"
-#include "peripherals/thermocouple.h"
 #include "lib/sensors_state.h"
 #include "lib/system_state.h"
+
+#include "peripherals/internal_watchdog.h"
+#include "peripherals/peripherals.h"
+#include "peripherals/pressure_sensor.h"
+#include "peripherals/pump.h"
+#include "peripherals/thermocouple.h"
+
+#include "lib/profiling_phases.h"
 #include "functional/descale.h"
 #include "functional/just_do_coffee.h"
 #include "functional/predictive_weight.h"
-#include "lib/profiling_phases.h"
-#include "peripherals/esp_comms.h"
-#include "peripherals/led.h"
-#include "peripherals/tof.h"
+
+//***#include "peripherals/esp_comms.h"
+//***#include "peripherals/led.h"
+//***#include "peripherals/scales.h"
+//***#include "peripherals/tof.h"
+#include "lcd/lcd.h"
 
 #define GET_PRESSURE_READ_EVERY 10 // Pressure refresh interval (ms)
 #define GET_SCALES_READ_EVERY   100 // Scales refresh interval (ms)
@@ -61,7 +64,7 @@ unsigned long flowTimer;
 unsigned long steamTime;
 
 //scales vars
-Measurements weightMeasurements(4);
+//***Measurements weightMeasurements(4);
 
 // brew detection vars
 bool brewActive = false;

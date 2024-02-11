@@ -23,8 +23,8 @@ eepromValues_t runningCfg;
 
 SystemState systemState;
 
-LED led;
-TOF tof;
+//***LED led;
+//***TOF tof;
 
 void setup(void) {
   LOG_INIT();
@@ -56,13 +56,13 @@ void setup(void) {
 #endif
 
   // Initialise comms library for talking to the ESP mcu
-  espCommsInit();
+  //***espCommsInit();
 
   // Initialize LED
-  led.begin();
-  led.setColor(9u, 0u, 9u); // WHITE
+  //***led.begin();
+  //***led.setColor(9u, 0u, 9u); // WHITE
   // Init the tof sensor
-  tof.init(currentState);
+  //***tof.init(currentState);
 
   // Initialising the saved values or writing defaults if first start
   eepromInit();
@@ -82,8 +82,8 @@ void setup(void) {
   LOG_INFO("Pressure sensor init");
 
   // Scales handling
-  scalesInit(runningCfg.scalesF1, runningCfg.scalesF2);
-  LOG_INFO("Scales init");
+  //***scalesInit(runningCfg.scalesF1, runningCfg.scalesF2);
+  //***LOG_INFO("Scales init");
 
   // Pump init
   pumpInit(runningCfg.powerLineFrequency, runningCfg.pumpFlowAtZero);
@@ -93,7 +93,7 @@ void setup(void) {
   LOG_INFO("Setup sequence finished");
 
   // Change LED colour on setup exit.
-  led.setColor(9u, 0u, 9u); // 64171
+  //***led.setColor(9u, 0u, 9u); // 64171
 
   watchdogInit();
 }
@@ -112,7 +112,7 @@ void loop(void) {
   brewDetect();
   modeSelect();
   lcdRefresh();
-  espCommsSendSensorData(currentState);
+  //***espCommsSendSensorData(currentState);
   sysHealthCheck(SYS_PRESSURE_IDLE);
 }
 
@@ -123,14 +123,14 @@ void loop(void) {
 
 static void sensorsRead(void) {
   sensorReadSwitches();
-  espCommsReadData();
+  //***espCommsReadData();
   sensorsReadTemperature();
-  sensorsReadWeight();
+  //***sensorsReadWeight();
   sensorsReadPressure();
   calculateWeightAndFlow();
   updateStartupTimer();
-  readTankWaterLevel();
-  doLed();
+  //***readTankWaterLevel();
+  //***doLed();
 }
 
 static void sensorReadSwitches(void) {
@@ -143,33 +143,6 @@ static void sensorsReadTemperature(void) {
   if (millis() > thermoTimer) {
     currentState.temperature = thermocoupleRead() - runningCfg.offsetTemp;
     thermoTimer = millis() + GET_KTYPE_READ_EVERY;
-  }
-}
-
-static void sensorsReadWeight(void) {
-  uint32_t elapsedTime = millis() - scalesTimer;
-
-  if (elapsedTime > GET_SCALES_READ_EVERY) {
-    currentState.scalesPresent = scalesIsPresent();
-    if (currentState.scalesPresent) {
-      if (currentState.tarePending) {
-        scalesTare();
-        weightMeasurements.clear();
-        weightMeasurements.add(scalesGetWeight());
-        currentState.tarePending = false;
-      }
-      else {
-        weightMeasurements.add(scalesGetWeight());
-      }
-      currentState.weight = weightMeasurements.latest().value;
-
-      if (brewActive) {
-        currentState.shotWeight = currentState.tarePending ? 0.f : currentState.weight;
-        currentState.weightFlow = fmax(0.f, weightMeasurements.measurementChange().changeSpeed());
-        currentState.smoothedWeightFlow = smoothScalesFlow.updateEstimate(currentState.weightFlow);
-      }
-    }
-    scalesTimer = millis();
   }
 }
 
@@ -239,16 +212,7 @@ static void calculateWeightAndFlow(void) {
   }
 }
 
-// return the reading in mm of the tank water level.
-static void readTankWaterLevel(void) {
-  if (lcdCurrentPageId == NextionPage::Home) {
-    // static uint32_t tof_timeout = millis();
-    // if (millis() >= tof_timeout) {
-    currentState.waterLvl = tof.readLvl();
-      // tof_timeout = millis() + 500;
-    // }
-  }
-}
+
 
 //##############################################################################################################################
 //############################################______PAGE_CHANGE_VALUES_REFRESH_____#############################################
@@ -693,7 +657,7 @@ static void profiling(void) {
     phaseProfiler.updatePhase(timeInShot, currentState);
     CurrentPhase& currentPhase = phaseProfiler.getCurrentPhase();
     ShotSnapshot shotSnapshot = buildShotSnapshot(timeInShot, currentState, currentPhase);
-    espCommsSendShotData(shotSnapshot, 100);
+    //***espCommsSendShotData(shotSnapshot, 100);
 
     if (phaseProfiler.isFinished()) {
       setPumpOff();
@@ -771,7 +735,7 @@ static void brewParamsReset(void) {
   flowTimer                = brewingTimer;
   systemHealthTimer        = brewingTimer + HEALTHCHECK_EVERY;
 
-  weightMeasurements.clear();
+  //***weightMeasurements.clear();
   predictiveWeight.reset();
   phaseProfiler.reset();
 }
@@ -953,36 +917,5 @@ static void cpsInit(eepromValues_t &eepromValues) {
     eepromValues.powerLineFrequency = 60u;
   } else if (cps > 0) { // 50 Hz
     eepromValues.powerLineFrequency = 50u;
-  }
-}
-
-static void doLed(void) {
-  if (runningCfg.ledDisco && brewActive) {
-    switch(lcdCurrentPageId) {
-      case NextionPage::BrewGraph:
-      case NextionPage::BrewManual:
-        led.setDisco(led.CLASSIC);
-        break;
-      case NextionPage::Flush:
-        led.setDisco(led.STROBE);
-        break;
-      case NextionPage::Descale:
-        led.setDisco(led.DESCALE);
-        break;
-      default:
-        led.setColor(0, 0, 0);
-        break;
-    }
-  } else {
-    switch(lcdCurrentPageId) {
-      case NextionPage::Led:
-        static uint32_t timer = millis();
-        if (millis() > timer) {
-          timer = millis() + 100u;
-          lcdFetchLed(runningCfg);
-        }
-      default: // intentionally fall through
-        led.setColor(runningCfg.ledR, runningCfg.ledG, runningCfg.ledB);
-    }
   }
 }
