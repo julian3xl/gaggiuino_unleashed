@@ -1,5 +1,5 @@
 #include "just_do_coffee.h"
-#include "../lcd/lcd.h"
+//***#include "../lcd/lcd.h"
 #include "../lib/utils.h"
 
 extern unsigned long steamTime;
@@ -14,7 +14,7 @@ inline static float TEMP_DELTA(float d, const SensorState &currentState) {
 }
 
 void justDoCoffee(const eepromValues_t &runningCfg, const SensorState &currentState, const bool brewActive) {
-  lcdTargetState((int)HEATING::MODE_brew); // setting the target mode to "brew temp"
+  //***lcdTargetState((int)HEATING::MODE_brew); // setting the target mode to "brew temp"
   float brewTempSetPoint = ACTIVE_PROFILE(runningCfg).setpoint + runningCfg.offsetTemp;
   float sensorTemperature = currentState.temperature + runningCfg.offsetTemp;
 
@@ -76,7 +76,7 @@ void pulseHeaters(const uint32_t pulseLength, const int factor_1, const int fact
 //################################____STEAM_POWER_CONTROL____##################################
 //#############################################################################################
 void steamCtrl(const eepromValues_t &runningCfg, SensorState &currentState) {
-  currentState.steamSwitchState ? lcdTargetState((int)HEATING::MODE_steam) : lcdTargetState((int)HEATING::MODE_brew); // setting the steam/hot water target temp
+  //***currentState.steamSwitchState ? lcdTargetState((int)HEATING::MODE_steam) : lcdTargetState((int)HEATING::MODE_brew); // setting the steam/hot water target temp
   // steam temp control, needs to be aggressive to keep steam pressure acceptable
   float steamTempSetPoint = runningCfg.steamSetPoint + runningCfg.offsetTemp;
   float sensorTemperature = currentState.temperature + runningCfg.offsetTemp;

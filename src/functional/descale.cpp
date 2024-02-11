@@ -1,7 +1,7 @@
 #include "descale.h"
 #include "just_do_coffee.h"
 #include "../peripherals/internal_watchdog.h"
-#include "../lcd/lcd.h"
+//***#include "../lcd/lcd.h"
 
 DescalingState descalingState = DescalingState::IDLE;
 
@@ -26,7 +26,7 @@ void deScale(eepromValues_t &runningCfg, const SensorState &currentState) {
       currentState.brewSwitchState ? descalingState : descalingState = DescalingState::FINISHED;
       setPumpToRawValue(10);
       if (millis() - descalingTimer > DESCALE_PHASE1_EVERY) {
-        lcdSetDescaleCycle(descalingCycle++);
+        //***lcdSetDescaleCycle(descalingCycle++);
         if (descalingCycle < 100) {
           descalingTimer = millis();
           descalingState = DescalingState::DESCALING_PHASE2;
@@ -40,7 +40,7 @@ void deScale(eepromValues_t &runningCfg, const SensorState &currentState) {
       setPumpOff();
       if (millis() - descalingTimer > DESCALE_PHASE2_EVERY) {
         descalingTimer = millis();
-        lcdSetDescaleCycle(descalingCycle++);
+        //***lcdSetDescaleCycle(descalingCycle++);
         descalingState = DescalingState::DESCALING_PHASE3;
       }
       break;
@@ -49,7 +49,7 @@ void deScale(eepromValues_t &runningCfg, const SensorState &currentState) {
       setPumpToRawValue(30);
       if (millis() - descalingTimer > DESCALE_PHASE3_EVERY) {
         solenoidBeat();
-        lcdSetDescaleCycle(descalingCycle++);
+        //***lcdSetDescaleCycle(descalingCycle++);
         if (descalingCycle < 100) {
           descalingTimer = millis();
           descalingState = DescalingState::DESCALING_PHASE1;
@@ -64,8 +64,8 @@ void deScale(eepromValues_t &runningCfg, const SensorState &currentState) {
       setSteamValveRelayOff();
       currentState.brewSwitchState ? descalingState = DescalingState::FINISHED : descalingState = DescalingState::IDLE;
       if (millis() - descalingTimer > 1000) {
-        lcdBrewTimerStop();
-        lcdShowPopup("FINISHED");
+        //***lcdBrewTimerStop();
+        //***lcdShowPopup("FINISHED");
         descalingTimer = millis();
       }
       break;

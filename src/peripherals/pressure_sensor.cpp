@@ -1,7 +1,7 @@
 #include "pressure_sensor.h"
 
 #include "i2c_bus_reset.h"
-#include "../lcd/lcd.h"
+//***#include "../lcd/lcd.h"
 #include "../log.h"
 #include "../pindef.h"
 
@@ -76,7 +76,7 @@ void getAdsError(void) {
   char tmp[25];
   unsigned int check = snprintf(tmp, sizeof(tmp), "ADS error code: %i", result);
   if (check > 0 && check <= sizeof(tmp)) {
-    lcdShowPopup(tmp);
+    //***lcdShowPopup(tmp);
   }
 }
 
@@ -93,7 +93,10 @@ void i2cResetState(void) {
     unsigned int check = snprintf(tmp, sizeof(tmp), "I2C error code: %i", result);
 
     if (check > 0 && check <= sizeof(tmp)) {
-      result == 0 ? adsInit() : lcdShowPopup(tmp);
+      //***result == 0 ? adsInit() : lcdShowPopup(tmp);
+      if (result == 0) {
+        adsInit();
+      }
     }
 
     delay(50);

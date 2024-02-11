@@ -24,7 +24,7 @@
 //***#include "peripherals/led.h"
 //***#include "peripherals/scales.h"
 //***#include "peripherals/tof.h"
-#include "lcd/lcd.h"
+//#include "lcd/lcd.h"
 
 #define GET_PRESSURE_READ_EVERY 10 // Pressure refresh interval (ms)
 #define GET_SCALES_READ_EVERY   100 // Scales refresh interval (ms)
