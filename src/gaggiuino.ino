@@ -98,12 +98,6 @@ void setup(void) {
   watchdogInit();
 }
 
-//##############################################################################################################################
-//############################################________________MAIN______________################################################
-//##############################################################################################################################
-
-
-//Main loop where all the logic is continuously run
 void loop(void) {
   fillBoiler();
   //***if (lcdCurrentPageId != lcdLastCurrentPageId) pageValuesRefresh();
@@ -115,11 +109,6 @@ void loop(void) {
   //***espCommsSendSensorData(currentState);
   sysHealthCheck(SYS_PRESSURE_IDLE);
 }
-
-//##############################################################################################################################
-//#############################################___________SENSORS_READ________##################################################
-//##############################################################################################################################
-
 
 static void sensorsRead(void) {
   sensorReadSwitches();
@@ -275,8 +264,9 @@ static void updateProfilerPhases(void) {
       : ACTIVE_PROFILE(runningCfg).shotStopOnCustomWeight;
   }
 
-  //update global stop conditions (currently only stopOnWeight is configured in nextion)
-  profile.globalStopConditions = GlobalStopConditions{ .weight=shotTarget };
+  GlobalStopConditions newGlobalStopConditions;
+  newGlobalStopConditions.weight = shotTarget;
+  profile.globalStopConditions = newGlobalStopConditions;
 
   profile.clear();
 
@@ -407,7 +397,6 @@ void addMainExtractionPhasesAndRamp() {
   insertRampPhaseIfNeeded(rampPhaseIndex);
 }
 
-// ------------ Insert a ramp phase in the rampPhaseIndex position ------------ //
 void insertRampPhaseIfNeeded(size_t rampPhaseIndex) {
   uint16_t rampTime = ACTIVE_PROFILE(runningCfg).preinfusionRamp;
   TransitionCurve rampCurve = (TransitionCurve)ACTIVE_PROFILE(runningCfg).preinfusionRampSlope;
@@ -424,11 +413,14 @@ void insertRampPhaseIfNeeded(size_t rampPhaseIndex) {
     return;
   }
 
+  PhaseStopConditions newStopConditions;
+  newStopConditions.time = rampTime * 1000;
+
   profile.insertPhase(Phase {
     .type           = targetPhase.type,
     .target         = Transition(targetValue, rampCurve, rampTime * 1000),
     .restriction    = -1,
-    .stopConditions = PhaseStopConditions{ .time=rampTime * 1000 }
+    .stopConditions = newStopConditions
   }, rampPhaseIndex);
 }
 
@@ -445,11 +437,18 @@ void addFlowPhase(Transition flow, float pressureRestriction, int timeMs, float 
 }
 
 void addPhase(PHASE_TYPE type, Transition target, float restriction, int timeMs, float pressureAbove, float pressureBelow, float shotWeight, float isWaterPumped) {
+  PhaseStopConditions newPhaseStopConditions;
+  newPhaseStopConditions.time = timeMs;
+  newPhaseStopConditions.pressureAbove = pressureAbove;
+  newPhaseStopConditions.pressureBelow = pressureBelow;
+  newPhaseStopConditions.weight = shotWeight;
+  newPhaseStopConditions.waterPumpedInPhase = isWaterPumped;
+
   profile.addPhase(Phase {
     .type           = type,
     .target         = target,
     .restriction    = restriction,
-    .stopConditions = PhaseStopConditions{ .time=timeMs, .pressureAbove=pressureAbove, .pressureBelow=pressureBelow, .weight=shotWeight, .waterPumpedInPhase=isWaterPumped }
+    .stopConditions = newPhaseStopConditions
   });
 }
 

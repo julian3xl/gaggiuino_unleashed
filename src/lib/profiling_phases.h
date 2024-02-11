@@ -3,7 +3,7 @@
 
 #include "utils.h"
 #include "sensors_state.h"
-#include "../../src/eeprom_data/eeprom_data.h"
+#include "../eeprom_data/eeprom_data.h"
 #include <vector>
 
 enum class PHASE_TYPE {
